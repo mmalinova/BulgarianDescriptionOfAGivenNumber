@@ -1,60 +1,28 @@
-# Monthly performance report
+# Bulgarian description of a given number as input
 
-Monthly performance report is a simple Java console application that generates monthly performance reports.
+Bulgarian description of a given number is a simple Java console application that describe number with cyrillic alphabetical words.
 ## How does it work?
 
- - Receive a command-line argument that is path to JSON data file (format provided
-below):
+ - Receive an INTEGER number from the console as input(at the range -2,147,483,647 - +2,147,483,647);
+ - Describe it with words from cyrillic alphabet and print on the console or write into a file.
 
-```json
-[
-  {
-    "name": "John Smith",
-    "totalSales": 250,
-    "salesPeriod": 10,
-    "experienceMultiplier": 0.5
-  },
-  {
-    "name": "David Prowless",
-    "totalSales": 250,
-    "salesPeriod": 10,
-    "experienceMultiplier": 0.5
-  }
-]
-```
-- Receive a command-line argument that is path to JSON report definition file (format
-  provided below):
-
-```json
-[
-  {
-    "topPerformersThreshold": 10,
-    "useExprienceMultiplier": false,
-    "periodLimit": 10
-  }
-]
-```
-
-- Generate CSV (comma separated value) file containing the report results (example
-  below):
- 
+### Example
 ```text
-Name , Score
-John Smith, 12.5
-David Prowess, 12.5
+12 -> дванадесте
+999 -> деветстотин деветдесет и девет
+1234567 -> един милион двеста тридесет и четири хиляди петстотин шестдесет и седм
 ``` 
-- The generated report should contain the following columns:
-    - Name - Name of the employee;
-    - Score - result of the evaluation;
-    
-### Resulting report file
-That file contains only employees that:
-1. have sales period that is equal or less than the periodLimit property;
-2. have score that is within the top X percent of the results, where X is defined by the
-topPerformersThreshold property of the report definition.
-
-The score is calculated based on the following rules:
-1. If useExperienceMultiplier is set to true:
-Score = totalSales/salesPeriod*experienceMultiplier
-2. If useExperienceMultiplier is set to false:
-Score = totalSales/salesPeriod
+### How does it is implemented?
+1. `constants` package contains two type of messages:
+    - ExceptionMessages - for some type of errors;
+    - OutputMessages - for printing on the console or writing to the file. 
+  
+It is good practice separating all string values into separate classes to make them easier to translate if necessary. 
+       
+2. `core` package contains the main business logic of the program. It has an interface and two classes:
+    - ControllerImpl - process the number according number of digits that contains. Split the number of its constituent digits and processes them. If we think about it, we can easily conclude that each number is composed of the digits from 0 to 9. Moreover, in addition to the range of possible values, here we take into account whether the number is positive or negative;
+    - EngineImpl - take the number from the console and make some basic validations. When it is checked, and it is OK, call the appropriate method from the ControllerImpl class. 
+   
+1. `io` package contains two interfaces and two classes:
+    - ConsoleReader - read the input;
+    - ConsoleWriter - print the output. 
