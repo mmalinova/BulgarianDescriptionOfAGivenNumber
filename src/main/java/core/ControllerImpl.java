@@ -106,7 +106,7 @@ public class ControllerImpl implements Controller {
             this.writer.writeLine(" ");
         }
         if (firstDigit == 0) {
-            spellingDoubleDigits(n % 100, isNegative, isFromAnotherDigit);
+            spellingDoubleDigits(n % 100, false, isFromAnotherDigit);
             return;
         }
         if (firstDigit == 1) {
@@ -124,18 +124,18 @@ public class ControllerImpl implements Controller {
             } else {
                 this.writer.writeLine(firstWord);
                 this.fileWriter.print(firstWord);
-                spellingDoubleDigits(n % 100, isNegative, true);
+                spellingDoubleDigits(n % 100, false, true);
                 return;
             }
         } else if (thirdDigit == 0) {
             this.writer.writeLine(firstWord);
             this.fileWriter.print(firstWord);
-            spellingDoubleDigits(n % 100, isNegative, true);
+            spellingDoubleDigits(n % 100, false, true);
             return;
         } else {
             this.writer.writeLine(firstWord + " ");
             this.fileWriter.print(firstWord + " ");
-            spellingDoubleDigits(n % 100, isNegative, false);
+            spellingDoubleDigits(n % 100, false, false);
             return;
         }
         this.writer.writeLine(words);
@@ -151,7 +151,7 @@ public class ControllerImpl implements Controller {
         String post = postfix[2];
 
         if (firstDigit == 0) {
-            spellingThreeDigits(n % 1000, isNegative, false);
+            spellingThreeDigits(n % 1000, false, false);
         } else if (firstDigit == 1) {
             if (n % 1000 == 0) {
                 this.writer.writeLine("хиляда");
@@ -160,14 +160,14 @@ public class ControllerImpl implements Controller {
             }
             this.writer.writeLine("хиляда");
             this.fileWriter.print("хиляда");
-            spellingThreeDigits(n % 1000, isNegative, true);
+            spellingThreeDigits(n % 1000, false, true);
         } else if (n % 1000 == 0) {
             this.writer.writeLine(String.format("%s %s", firstTen[firstDigit], post));
             this.fileWriter.print(String.format("%s %s", firstTen[firstDigit], post));
         } else {
             this.writer.writeLine(String.format("%s %s", firstTen[firstDigit], post));
             this.fileWriter.print(String.format("%s %s", firstTen[firstDigit], post));
-            spellingThreeDigits(n % 1000, isNegative, true);
+            spellingThreeDigits(n % 1000, false, true);
         }
     }
 
@@ -179,9 +179,9 @@ public class ControllerImpl implements Controller {
         String post = postfix[2];
 
         if (firstDigit == 0) {
-            spellingFourDigits(n % 10000, isNegative);
+            spellingFourDigits(n % 10000, false);
         } else {
-            spellingDoubleDigits(firstTwoDigits, isNegative, false);
+            spellingDoubleDigits(firstTwoDigits, false, false);
             this.writer.writeLine(String.format(" %s", post));
             this.fileWriter.print(String.format(" %s", post));
             if (n % 1000 == 0) {
@@ -189,13 +189,13 @@ public class ControllerImpl implements Controller {
             }
             if ((n % 1000) / 10 == 1 || (n % 1000) / 10 == 0) {
                 if ((n % 100) / 10 == 0 || (n % 100) / 10 == 1) {
-                    spellingThreeDigits(n % 1000, isNegative, true);
+                    spellingThreeDigits(n % 1000, false, true);
                     return;
                 }
             }
             this.writer.writeLine(" ");
             this.fileWriter.print(" ");
-            spellingThreeDigits(n % 1000, isNegative, false);
+            spellingThreeDigits(n % 1000, false, false);
         }
     }
 
@@ -207,9 +207,9 @@ public class ControllerImpl implements Controller {
         String post = postfix[2];
 
         if (firstDigit == 0) {
-            spellingFiveDigits(n % 100000, isNegative);
+            spellingFiveDigits(n % 100000, false);
         } else {
-            spellingThreeDigits(firstTreeDigits, isNegative, false);
+            spellingThreeDigits(firstTreeDigits, false, false);
             this.writer.writeLine(String.format(" %s", post));
             this.fileWriter.print(String.format(" %s", post));
             if (n % 1000 == 0) {
@@ -217,13 +217,13 @@ public class ControllerImpl implements Controller {
             }
             if ((n % 1000) / 10 == 1 || (n % 1000) / 10 == 0) {
                 if ((n % 1000) % 100 == 0 || (n % 1000) % 100 == 1) {
-                    spellingThreeDigits(n % 10000, isNegative, true);
+                    spellingThreeDigits(n % 10000, false, true);
                     return;
                 }
             }
             this.writer.writeLine(" ");
             this.fileWriter.print(" ");
-            spellingThreeDigits(n % 1000, isNegative, false);
+            spellingThreeDigits(n % 1000, false, false);
         }
     }
 
@@ -235,7 +235,7 @@ public class ControllerImpl implements Controller {
         String post = postfix[3];
 
         if (firstDigit == 0) {
-            spellingSixDigits(n % 1000000, isNegative);
+            spellingSixDigits(n % 1000000, false);
         } else {
             if (firstDigit == 1) {
                 this.writer.writeLine(repeating[0]);
@@ -243,7 +243,7 @@ public class ControllerImpl implements Controller {
                 this.writer.writeLine(" милион ");
                 this.fileWriter.print(" милион ");
             } else {
-                spellingSingleDigit(firstDigit, isNegative);
+                spellingSingleDigit(firstDigit, false);
                 this.writer.writeLine(post + " ");
                 this.fileWriter.print(post + " ");
             }
@@ -256,7 +256,7 @@ public class ControllerImpl implements Controller {
             if (n % 1000000 == 0) {
                 return;
             }
-            spellingSixDigits(n % 1000000, isNegative);
+            spellingSixDigits(n % 1000000, false);
         }
     }
 
@@ -269,16 +269,16 @@ public class ControllerImpl implements Controller {
         String post = postfix[3];
 
         if (firstDigit == 0) {
-            spellingSevenDigits(n % 10000000, isNegative);
+            spellingSevenDigits(n % 10000000, false);
         } else {
-            spellingDoubleDigits(firstTwoDigits, isNegative, false);
+            spellingDoubleDigits(firstTwoDigits, false, false);
             this.writer.writeLine(" " + post + " ");
             this.fileWriter.print(" " + post + " ");
         }
         if (n % 1000000 == 0) {
             return;
         }
-        spellingSixDigits(n % 1000000, isNegative);
+        spellingSixDigits(n % 1000000, false);
     }
 
 
@@ -289,16 +289,16 @@ public class ControllerImpl implements Controller {
         String post = postfix[3];
 
         if (firstDigit == 0) {
-            spellingEightDigits(n % 100000000, isNegative);
+            spellingEightDigits(n % 100000000, false);
         } else {
-            spellingThreeDigits(n / 1000000, isNegative, false);
+            spellingThreeDigits(n / 1000000, false, false);
             this.writer.writeLine(" " + post + " ");
             this.fileWriter.print(" " + post + " ");
         }
         if (n % 100000000 == 0) {
             return;
         }
-        spellingSixDigits(n % 1000000, isNegative);
+        spellingSixDigits(n % 1000000, false);
     }
 
     @Override
@@ -307,7 +307,7 @@ public class ControllerImpl implements Controller {
         int firstDigit = n / 1000000000;
 
         if (firstDigit == 0) {
-            spellingNineDigits(n % 1000000000, isNegative);
+            spellingNineDigits(n % 1000000000, false);
         } else {
             if (firstDigit == 1) {
                 this.writer.writeLine(repeating[0]);
@@ -324,7 +324,7 @@ public class ControllerImpl implements Controller {
         if (n % 100000000 == 0) {
             return;
         }
-        spellingNineDigits(n % 1000000000, isNegative);
+        spellingNineDigits(n % 1000000000, false);
     }
 
     private void writeMinusIfTheNumberIsNegative(boolean isNegative) {
