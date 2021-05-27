@@ -8,9 +8,9 @@ Bulgarian description of a given number is a simple Java console application tha
 
 ### Example
 ```text
-12 -> дванадесте
+12 -> дванадесет
 999 -> деветстотин деветдесет и девет
-1234567 -> един милион двеста тридесет и четири хиляди петстотин шестдесет и седм
+1234567 -> един милион двеста тридесет и четири хиляди петстотин шестдесет и седем
 ``` 
 ### How does it is implemented?
 1. `constants` package contains two type of messages:
